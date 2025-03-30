@@ -1,0 +1,31 @@
+from selenium import webdriver
+import time
+from selenium.webdriver.common.by import By
+
+driver = webdriver.Chrome()
+driver.maximize_window()
+
+driver.get('https://www.selenium.dev')
+
+driver.switch_to.new_window()
+driver.get('https://playwright.dev')
+
+numberOfTabs = len(driver.window_handles)
+print("numberOfTabs: ", numberOfTabs)
+
+tabValue = driver.window_handles
+print("Tab Value: ", tabValue)
+
+currentTab = driver.current_window_handle
+print("current tab value: " , currentTab)
+
+driver.find_element(By.CSS_SELECTOR, "img[alt='VS Code']").click()
+
+firstTab = driver.window_handles[0]
+
+if driver.current_window_handle != firstTab:
+    driver.switch_to.window(firstTab)
+    driver.find_element(By.XPATH, "//span[normalize-space()='Downloads']").click()
+
+time.sleep(5)
+driver.quit()
